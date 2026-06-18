@@ -1,0 +1,73 @@
+🚀 MiniOS Kernel v4.0
+
+"Kim demiş hayır aldığını? Mini gibi bir işletim sistemi yazamazsın diye..."
+
+═══════════════════════════════════════════
+
+🇹🇷 MiniOS NEDİR?
+
+MiniOS, tamamen sıfırdan C dili ve Assembly ile yazılmış,
+AI (Yapay Zeka) destekli, yerli ve milli bir işletim sistemi
+çekirdeğidir.
+
+Bu proje, 12 yaşında bir Türk geliştirici tarafından,
+Termux üzerinde Lenovo Tab M9 tablet kullanılarak yazılmıştır.
+
+═══════════════════════════════════════════
+
+👤 GELİŞTİRİCİ HAKKINDA
+
+Yaş: 12
+Kodlama deneyimi: 7 yıl (5 yaşında başladı)
+Bildiği diller: Python, C, Assembly, HTML/CSS
+
+Diğer projeleri:
+- Kitap yazdı
+- Film çekti
+- Müzik üretti
+- 15 web sitesi kurdu
+- Robot yaptı
+- Yapay zeka modeli eğitti
+- Şirket kurdu
+- Cloud PC APK geliştirdi
+
+═══════════════════════════════════════════
+
+⚡ ÖZELLİKLER
+
+- AI Engine (Yapay zeka tahmin motoru)
+- Buddy System bellek yönetimi
+- 4-level paging sanal bellek
+- CFS benzeri görev zamanlayıcı
+- VFS (EXT2, FAT32 desteği)
+- ASLR, SMEP/SMAP güvenliği
+- SHA-256, AES-256 şifreleme
+- PCI, SATA, NVMe, USB tarama
+- Pipe, Message Queue, Shared Memory
+- 100+ Linux uyumlu sistem çağrısı
+- VGA + Serial konsol
+
+═══════════════════════════════════════════
+
+🔧 NASIL DERLENİR?
+
+pkg install clang lld nasm qemu-system-x86_64 -y
+make
+qemu-system-x86_64 -kernel minios.bin -m 256M
+
+═══════════════════════════════════════════
+
+🎯 YAKINDA
+
+- TCP/IP Ağ Yığını
+- GUI (Masaüstü)
+- Ses Sürücüsü
+- WiFi Desteği
+- ARM64 Tablet Desteği
+
+═══════════════════════════════════════════
+
+"Bu işletim sistemi, bir 'hayır' cevabının ardından doğdu.
+Hayallerinizin peşinden gidin, imkansız diye bir şey yok!"
+
+- MiniOS Developer, 12 yaşında 🚀🇹🇷
