@@ -1,0 +1,84 @@
+/* =============================================================================
+ * MiniOS Kernel v4.0 - Main
+ * ============================================================================= */
+
+#include "types.h"
+#include "printk.h"
+
+extern void printk_init(void);
+extern void gdt_init(void);
+extern void idt_init(void);
+extern void timer_init(void);
+extern void keyboard_init(void);
+extern void pmm_init(uint64_t mem_start, uint64_t mem_end);
+extern void vmm_init(void);
+extern void scheduler_init(void);
+extern void ai_engine_init(void);
+extern void security_init(void);
+extern void tss_set_rsp0(uint64_t);
+extern task_struct_t *create_task(const char *name, void (*entry)(void));
+extern char keyboard_getc(void);
+extern bool keyboard_has_data(void);
+
+void kernel_early_init(uint64_t magic, uint64_t multiboot_info) {
+    early_printk("MiniOS Kernel v4.0 booting...\n");
+    if (magic != 0x36d76289) {
+        early_printk("Invalid multiboot magic!\n");
+        while (1) __hlt();
+    }
+}
+
+void idle_task_entry(void) {
+    while (1) { __sti(); __hlt(); __cli(); }
+}
+
+void shell_task_entry(void) {
+    printk("[SHELL] MiniOS Shell started\n");
+    printk("Commands: help, info, ps, mem, ai, reboot\n");
+    while (1) {
+        printk("minios> ");
+        char cmd[64];
+        int i = 0;
+        while (i < 63) {
+            char c = keyboard_getc();
+            if (c == '\n') break;
+            if (c == '\b' && i > 0) { i--; printk("\b \b"); }
+            else if (c >= 32 && c < 127) { cmd[i++] = c; printk("%c", c); }
+        }
+        cmd[i] = '\0';
+        printk("\n");
+        if (strcmp(cmd, "help") == 0) {
+            printk("Available: help, info, ps, mem, ai, reboot\n");
+        } else if (strcmp(cmd, "info") == 0) {
+            printk("MiniOS v4.0 - x86_64 - AI-Powered Secure Kernel\n");
+        } else if (strcmp(cmd, "reboot") == 0) {
+            uint8_t good = 0x02;
+            while (good & 0x02) good = __inb(0x64);
+            __outb(0x64, 0xFE);
+            while (1) __hlt();
+        } else if (strlen(cmd) > 0) {
+            printk("Unknown: %s\n", cmd);
+        }
+    }
+}
+
+void kernel_main(void) {
+    printk_init();
+    printk("================================================================================\n");
+    printk("  MiniOS Kernel v4.0 - AI-Powered Secure Operating System\n");
+    printk("================================================================================\n\n");
+    gdt_init();
+    idt_init();
+    pmm_init(0x100000, 0x100000000);
+    vmm_init();
+    security_init();
+    ai_engine_init();
+    scheduler_init();
+    timer_init();
+    keyboard_init();
+    printk("\n[BOOT] All subsystems initialized!\n\n");
+    create_task("idle", idle_task_entry);
+    create_task("shell", shell_task_entry);
+    __sti();
+    while (1) { __sti(); __hlt(); __cli(); }
+}
