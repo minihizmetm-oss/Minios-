@@ -2,7 +2,8 @@ ENTRY(_start)
 SECTIONS
 {
     . = 1M;
-    .multiboot : { *(.multiboot) }
+    .note.PVH : { *(.note.PVH) }
+    .multiboot2 : { *(.multiboot2) }
     .text : { *(.text) }
     .rodata : { *(.rodata) }
     .data : { *(.data) }
